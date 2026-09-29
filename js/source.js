@@ -105,7 +105,26 @@ $(function () {
         $("#issues-amt").text(issuesAmt);      
         $(".revenue-amt").text(revenueAmt);      
         $("#notification-num").text(notifAmt);      
-   
+    
+        $.each(sales, function (index,item){
+            const row = `<tr>
+            <td>${item.product}</td>
+            <td>${item.quantity}</td>
+            <td>${item.revenue}</td>
+            </tr>`
+            $("#salesTableBody").append(row)
+        })
+
+    $.each(customers,function (index,person){
+        const statusClass = "status-" + person.status.toLowerCase();
+        const row = `<tr>
+            <td>${person.name}</td>
+            <td>${person.email}</td>
+            <td><span class="status ${statusClass}">${person.status}</span></td>
+            <td>${person.joined}</td>
+            </tr>`
+            $("#customerTableBody").append(row)
+    })
 
 
     });
