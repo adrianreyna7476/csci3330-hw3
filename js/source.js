@@ -99,9 +99,80 @@ $(function () {
     // Do not modify the JS objects above. You will write your code below.
     // *********************************************************************
 
+        $("#username").text(username);
+        $("#customer-num").text(customerNum);      
+        $("#orders-amt").text(ordersAmt);      
+        $("#issues-amt").text(issuesAmt);      
+        $(".revenue-amt").text(revenueAmt);      
+        $("#notification-num").text(notifAmt);      
+    
+        $.each(sales, function (index,item){
+            const row = `<tr>
+            <td>${item.product}</td>
+            <td>${item.quantity}</td>
+            <td>${item.revenue}</td>
+            </tr>`
+            $("#salesTableBody").append(row)
+        })
 
+    $.each(customers,function (index,person){
+        const statusClass = "status-" + person.status.toLowerCase();
+        const row = `<tr>
+            <td>${person.name}</td>
+            <td>${person.email}</td>
+            <td><span class="status ${statusClass}">${person.status}</span></td>
+            <td>${person.joined}</td>
+            </tr>`
+            $("#customerTableBody").append(row)
+    })
+    function populateList(selector, entries, textKey) {
+    for (const entry of entries) {
+        const listItem = $("<li></li>").text(entry[textKey]);
+        $(selector).append(listItem);
+    }
+}
 
-       
+    populateList("#activity-list", activities, "message");
+    populateList("#system-status-list", messages, "messsage");
+    populateList("#notifications-list", notifications, "messsage");
+    populateList("#tasks-list", tasks, "messsage");
 
+    $("button").button();
 
+    $("#dashboardTabs").tabs();
+
+    $("#accordion").accordion({
+        collapsible: true,
+        heightStyle: "content"
     });
+
+    $("#customerDate").datepicker();
+
+    $("#customerDialog").dialog({
+        autoOpen: false,
+        modal: true,
+        width: 450,
+        buttons: {
+            "Create Customer": function () {
+                var name = $("#customerName").val();
+                var email = $("#customerEmail").val();
+                if (!name || !email) {
+                    alert(
+                        "Please enter a name and email."
+                    );
+                    return;
+                }
+                alert("Customer created: " + name);
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+
+    $("#newCustomerButton").on("click", function () {
+        $("#customerDialog").dialog("open");
+    });
+
+});
