@@ -125,6 +125,16 @@ $(function () {
             </tr>`
             $("#customerTableBody").append(row)
     })
+    function populateList(selector, entries, textKey) {
+    for (const entry of entries) {
+        const listItem = $("<li></li>").text(entry[textKey]);
+        $(selector).append(listItem);
+    }
+}
 
+    populateList("#activity-list", activities, "message");
+    populateList("#system-status-list", messages, "messsage");
+    populateList("#notifications-list", notifications, "messsage");
+    populateList("#tasks-list", tasks, "messsage");
 
     });
